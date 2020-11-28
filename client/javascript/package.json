@@ -1,0 +1,69 @@
+{
+  "name": "javascript",
+  "version": "0.1.0",
+  "private": true,
+  "dependencies": {
+    "@material-ui/core": "^4.11.1",
+    "@material-ui/icons": "^4.9.1",
+    "@testing-library/jest-dom": "^5.11.4",
+    "@testing-library/react": "^11.1.0",
+    "@testing-library/user-event": "^12.1.10",
+    "@types/jest": "^26.0.15",
+    "@types/node": "^12.0.0",
+    "@types/react": "^16.9.53",
+    "@types/react-dom": "^16.9.8",
+    "electron": "^11.0.3",
+    "react": "^17.0.1",
+    "react-dom": "^17.0.1",
+    "react-scripts": "4.0.1",
+    "socket.io-client": "^2.3.1",
+    "typescript": "^4.0.3",
+    "web-vitals": "^0.2.4"
+  },
+  "scripts": {
+    "start": "nf start -p 3000",
+    "build": "react-scripts build",
+    "test": "react-scripts test --env=jsdom",
+    "eject": "react-scripts eject",
+    "electron": "electron .",
+    "electron-start": "node src/start-react",
+    "react-start": "set BROWSER=none && react-scripts start",
+    "browser": "react-scripts start",
+    "pack": "build --dir",
+    "dist": "npm run build && build",
+    "postinstall": "install-app-deps"
+  },
+  "homepage": "./",
+  "main": "src/start.js",
+  "build": {
+    "appId": "com.electron.electron-with-create-react-app",
+    "win": {
+      "iconUrl": "https://cdn2.iconfinder.com/data/icons/designer-skills/128/react-256.png"
+    },
+    "directories": {
+      "buildResources": "public"
+    }
+  },
+  "eslintConfig": {
+    "extends": [
+      "react-app",
+      "react-app/jest"
+    ]
+  },
+  "browserslist": {
+    "production": [
+      ">0.2%",
+      "not dead",
+      "not op_mini all"
+    ],
+    "development": [
+      "last 1 chrome version",
+      "last 1 firefox version",
+      "last 1 safari version"
+    ]
+  },
+  "devDependencies": {
+    "@types/socket.io-client": "^1.4.34",
+    "electron-builder": "^22.9.1"
+  }
+}
