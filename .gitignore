@@ -106,3 +106,7 @@ tern-port
 
 .DS_Store
 *client/javascript/.idea
+
+*__pycache__/
+__pychache__/
+*.pyc
