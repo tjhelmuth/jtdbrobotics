@@ -26,7 +26,7 @@ const useStyles = makeStyles((theme) => ({
 export default ({motors, onAngleChange, onAddClick}: Props) => {
     const classes = useStyles();
 
-    return <Grid container style={{paddingBottom: 16, paddingTop: 16}}>
+    return <Grid container style={{paddingBottom: 16, paddingTop: 16}} spacing={1}>
 
         <Grid item xs={12}>
             <div className={classes.actions}>

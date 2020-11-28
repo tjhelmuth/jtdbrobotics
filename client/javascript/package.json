@@ -12,11 +12,13 @@
     "@types/node": "^12.0.0",
     "@types/react": "^16.9.53",
     "@types/react-dom": "^16.9.8",
+    "debounce": "^1.2.0",
     "electron": "^11.0.3",
     "react": "^17.0.1",
     "react-dom": "^17.0.1",
     "react-scripts": "4.0.1",
     "socket.io-client": "^2.3.1",
+    "throttle-debounce": "^3.0.1",
     "typescript": "^4.0.3",
     "web-vitals": "^0.2.4"
   },
@@ -64,6 +66,7 @@
   },
   "devDependencies": {
     "@types/socket.io-client": "^1.4.34",
+    "@types/throttle-debounce": "^2.1.0",
     "electron-builder": "^22.9.1"
   }
 }

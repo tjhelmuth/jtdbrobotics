@@ -6,6 +6,7 @@ import AddMotorDialog from "../AddMotorDialog";
 import Settings, {EMPTY_SETTINGS} from '../../model/Settings';
 import ConnectionDialog from "../ConnectionDialog";
 import Server from "../../Server";
+import MotorState from "../../model/MotorState";
 
 const useStyles = makeStyles((theme) => ({
     root: {
@@ -46,8 +47,21 @@ export default (props: any) => {
         setConnected(false);
     };
 
+    const handleGetMotors = (motorsArr: Array<any>) => {
+        const motors = motorsArr.map(m => new Motor(m.name, m.pin, new MotorState(m.angle)));
+        setMotors(motors);
+    };
+
     useEffect(() => {
+        let initialSettings = Settings.load();
+        setSettings(initialSettings);
+
+        server.getMotorsHandler = handleGetMotors;
         server.onDisconnect(handleDisconnect);
+
+        if(initialSettings !== EMPTY_SETTINGS){
+            handleConnect(initialSettings.address);
+        }
     }, []);
 
     const handleTabChange = (event: any, tabNum: number) => {
@@ -60,7 +74,7 @@ export default (props: any) => {
         newMotors[index] = motor.atAngle(angle);
         setMotors(newMotors);
 
-        server.sendAngle(angle);
+        server.sendAngle(motor.name, angle);
     };
 
     const handleAddClick = () => setAdding(true);
@@ -69,11 +83,16 @@ export default (props: any) => {
         newMotors.push(motor);
         setMotors(newMotors);
         setAdding(false);
+
+        server.addMotor(motor);
     }
     const handleAddCancel = () => setAdding(false);
 
     const handleConnect = async (address: string) => {
-        setSettings(new Settings(address));
+        let settings = new Settings(address);
+        settings.persist();
+        setSettings(settings);
+
         setConnecting(true);
 
         try {

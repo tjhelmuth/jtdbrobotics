@@ -20,7 +20,7 @@ interface Props {
     onConnect: (address: string) => void
 };
 
-const IP_REGEX = /^(25[0-5]|2[0-4][0-9]|[01]?[0-9][0-9]?)\.(25[0-5]|2[0-4][0-9]|[01]?[0-9][0-9]?)\.(25[0-5]|2[0-4][0-9]|[01]?[0-9][0-9]?)\.(25[0-5]|2[0-4][0-9]|[01]?[0-9][0-9]?)*$/;
+const IP_REGEX = /^(25[0-5]|2[0-4][0-9]|[01]?[0-9][0-9]?)\.(25[0-5]|2[0-4][0-9]|[01]?[0-9][0-9]?)\.(25[0-5]|2[0-4][0-9]|[01]?[0-9][0-9]?)\.(25[0-5]|2[0-4][0-9]|[01]?[0-9][0-9]?)$/;
 
 interface ValidationErrors {
     address?: string
@@ -40,7 +40,7 @@ export default ({settings, setup, connecting, onConnect}: Props) => {
     const classes = useStyles();
 
     let initialErrors: ValidationErrors = {
-        address: undefined
+        address: IP_REGEX.test(settings.address) ? undefined : "Enter a valid IP Address"
     };
     const [errors, setErrors] = useState(initialErrors);
     const [update, setUpdate] = useState(settings.address);
@@ -48,7 +48,7 @@ export default ({settings, setup, connecting, onConnect}: Props) => {
     const handleAddressChange = (event: ChangeEvent<HTMLInputElement>) => {
         const value = event.target.value;
         let newErrors: ValidationErrors = {
-            address: undefined
+            address: IP_REGEX.test(value) ? undefined : "Enter a valid IP Address"
         };
 
         setErrors(newErrors);
