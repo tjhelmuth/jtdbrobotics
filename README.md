@@ -1,6 +1,25 @@
 # jtdbrobotics
 
-GIT Tutorial for James:
+We're here for robot arms.
+
+If you don't understand why the "b" is there and hate it, complain to Tyler.
+
+## Basic Architecture
+____
+
+There are two different apps that need to run in order for the robots to work:
+
+1. Server
+    - Runs on the Raspberry Pi
+    - Actually controls the servos
+    - Receives requests from client
+2. Client
+    - Runs on any machine
+    - UI for people
+    - Sends requests to Server
+
+## GIT Tutorial for James:
+____
 
 Git is a way to share changes to code with other developers.
 
@@ -12,7 +31,8 @@ When you want to download the code for the first time you will want to navigate 
 
 This will download the code onto your computer for the first time.
 
-## Pulling the latest code changes
+### Pulling the latest code changes
+____
 
 This code will not automatically keep up to date with the changes that other people are making. You will need to manually ask git to download the latest changes
 
