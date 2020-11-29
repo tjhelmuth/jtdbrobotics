@@ -1,6 +1,14 @@
 # jtdbrobotics
 
-GIT Tutorial for James:
+We're here for robot arms
+
+## Basic Architecture
+____
+The ser
+
+
+## GIT Tutorial for James:
+____
 
 Git is a way to share changes to code with other developers.
 
@@ -12,7 +20,8 @@ When you want to download the code for the first time you will want to navigate 
 
 This will download the code onto your computer for the first time.
 
-## Pulling the latest code changes
+### Pulling the latest code changes
+____
 
 This code will not automatically keep up to date with the changes that other people are making. You will need to manually ask git to download the latest changes
 
