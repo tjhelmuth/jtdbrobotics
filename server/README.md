@@ -17,3 +17,8 @@ To kill this run
     
     sudo killall pigpiod
 
+Then you can run
+
+    python3 server.py
+
+To launch the server. It runs on port 8765 on the IP address of your raspberry PI

@@ -1,46 +1,37 @@
-# Getting Started with Create React App
+## Javascript client    
 
-This project was bootstrapped with [Create React App](https://github.com/facebook/create-react-app).
+The client is a react project that runs in your browser or a standalone electron app. I have not figured out how to package the standalone app yet.
 
-## Available Scripts
 
-In the project directory, you can run:
+___
+### Install yarn
+To run the client you need to install Yarn
 
-### `yarn start`
+https://classic.yarnpkg.com/en/docs/install/#windows-stable
 
-Runs the app in the development mode.\
-Open [http://localhost:3000](http://localhost:3000) to view it in the browser.
+Yarn is a package manager for javascript that lets you download libraries from other people that you can add to your app. It also will package everything together into 1 file that you can give people to run.
 
-The page will reload if you make edits.\
-You will also see any lint errors in the console.
+Starting up the app and building it is done through yarn commands.
 
-### `yarn test`
+____
 
-Launches the test runner in the interactive watch mode.\
-See the section about [running tests](https://facebook.github.io/create-react-app/docs/running-tests) for more information.
+### Running the app in browser
+Once yarn is installed you will need to navigate to the client/javascript folder.
 
-### `yarn build`
+    cd client/javascript
 
-Builds the app for production to the `build` folder.\
-It correctly bundles React in production mode and optimizes the build for the best performance.
+Once you are there you will need to run
 
-The build is minified and the filenames include the hashes.\
-Your app is ready to be deployed!
+    yarn install
 
-See the section about [deployment](https://facebook.github.io/create-react-app/docs/deployment) for more information.
+You will want to run this anytime you pull down new code from the git repo. It goes out and downloads the necessary libraries that are includes in package.json
 
-### `yarn eject`
+After yarn install is completed. To start the app, you will need to execute
 
-**Note: this is a one-way operation. Once you `eject`, you can’t go back!**
+    yarn browser
 
-If you aren’t satisfied with the build tool and configuration choices, you can `eject` at any time. This command will remove the single build dependency from your project.
+This will compile the app and start it up in your browser.
+___
 
-Instead, it will copy all the configuration files and the transitive dependencies (webpack, Babel, ESLint, etc) right into your project so you have full control over them. All of the commands except `eject` will still work, but they will point to the copied scripts so you can tweak them. At this point you’re on your own.
-
-You don’t have to ever use `eject`. The curated feature set is suitable for small and middle deployments, and you shouldn’t feel obligated to use this feature. However we understand that this tool wouldn’t be useful if you couldn’t customize it when you are ready for it.
-
-## Learn More
-
-You can learn more in the [Create React App documentation](https://facebook.github.io/create-react-app/docs/getting-started).
-
-To learn React, check out the [React documentation](https://reactjs.org/).
+### Editing the code
+You can use Visual Studio Code to edit the code :)
