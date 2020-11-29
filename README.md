@@ -1,11 +1,22 @@
 # jtdbrobotics
 
-We're here for robot arms
+We're here for robot arms.
+
+If you don't understand why the "b" is there and hate it, complain to Tyler.
 
 ## Basic Architecture
 ____
-The ser
 
+There are two different apps that need to run in order for the robots to work:
+
+1. Server
+    - Runs on the Raspberry Pi
+    - Actually controls the servos
+    - Receives requests from client
+2. Client
+    - Runs on any machine
+    - UI for people
+    - Sends requests to Server
 
 ## GIT Tutorial for James:
 ____
