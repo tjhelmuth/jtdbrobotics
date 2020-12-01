@@ -1,5 +1,5 @@
 import React, {ChangeEvent, useState} from 'react';
-import Motor from "../model/Motor";
+import Motor, {create} from "../model/Motor";
 import {
     Button,
     Dialog,
@@ -38,7 +38,7 @@ export default ({onSave, onCancel, names}: Props) => {
     };
 
     const handleSave = () => {
-        onSave(new Motor(name, pin));
+        onSave(create({name, pin, state: {angle: 0}}));
     };
 
     return <Dialog open={true}>

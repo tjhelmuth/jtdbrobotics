@@ -1,7 +1,9 @@
 import React from 'react';
 import Motor from "../model/Motor";
-import {Card, CardContent, CardHeader, Grid, Slider, Typography} from "@material-ui/core";
-import {throttle} from 'throttle-debounce';
+import {Card, CardContent, CardHeader, Typography} from "@material-ui/core";
+import AngleInput from "./AngleInput";
+import motorSlice, {RotationDirection, startRotate} from '../state/MotorSlice'
+import {useDispatch} from "react-redux";
 
 interface Props {
     motor: Motor;
@@ -9,27 +11,36 @@ interface Props {
 }
 
 export default ({motor, onAngleChange}: Props) => {
-    const handleAngleChange = throttle(50, (event: any, value: number | number[]) => {
-        let angle = Array.isArray(value) ? value[0] : value;
+    const dispatch = useDispatch();
+
+    const handleAngleSlider = (angle: number) => {
         onAngleChange(motor, angle);
-    });
+    }
+
+    const handleRotateLeftStart = () => {
+        dispatch(startRotate(motor, RotationDirection.LEFT));
+    }
+
+    const handleRotateRightStart = () => {
+        dispatch(startRotate(motor, RotationDirection.RIGHT));
+    }
+
+    const handleRotateEnd = () => {
+        dispatch(motorSlice.actions.stopRotating(motor));
+    }
+
 
     return <Card elevation={2}>
         <CardHeader title={motor.name} titleTypographyProps={{color: 'primary', variant: 'h6'}} style={{paddingBottom: 0}} />
 
         <CardContent>
             <Typography>Pin #</Typography>
-            <Typography color="textSecondary">{motor.pin}</Typography>
-        </CardContent>
+            <Typography color="textSecondary" gutterBottom>{motor.pin}</Typography>
 
-        <CardContent>
-            <Typography>Angle</Typography>
-            <Typography color="textSecondary" style={{marginBottom: 8}}>{motor.state.angle}</Typography>
-            <Grid container>
-                <Grid item xs={1}><strong>0</strong></Grid>
-                <Grid item xs={9} style={{textAlign: 'center'}}><Slider min={0} max={90} value={motor.state.angle} onChange={handleAngleChange}/></Grid>
-                <Grid item xs={2} style={{textAlign: 'right'}}><strong>90</strong></Grid>
-            </Grid>
+            <Typography variant="h6">
+                Control Angle
+            </Typography>
+            <AngleInput angle={motor.state.angle} onSliderChange={handleAngleSlider} onRotateLeftStart={handleRotateLeftStart} onRotateRightStart={handleRotateRightStart} onRotateEnd={handleRotateEnd} />
         </CardContent>
     </Card>
 };

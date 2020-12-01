@@ -1,12 +1,15 @@
 import {Container, createMuiTheme, makeStyles, Paper, Tab, Tabs, ThemeProvider} from "@material-ui/core";
 import React, {useEffect, useState} from "react";
 import MotorList from "../MotorList";
-import Motor from "../../model/Motor";
+import Motor, {create as createMotor} from "../../model/Motor";
 import AddMotorDialog from "../AddMotorDialog";
 import Settings, {EMPTY_SETTINGS} from '../../model/Settings';
 import ConnectionDialog from "../ConnectionDialog";
 import Server from "../../Server";
-import MotorState from "../../model/MotorState";
+import motorSlice from "../../state/MotorSlice";
+import {useDispatch, useSelector} from "react-redux";
+import {RootState} from "../../App";
+import appSlice, {ConnectionState, connectToServer} from "../../state/AppSlice";
 
 const useStyles = makeStyles((theme) => ({
     root: {
@@ -30,34 +33,42 @@ const theme = createMuiTheme({
     }
 });
 
-const server = new Server();
+const { motorsLoaded, addMotor, changeMotorAngle } = motorSlice.actions;
+const {disconnect} = appSlice.actions;
 
 export default (props: any) => {
     const classes = useStyles();
     const [tab, setTab] = useState(0);
     const [adding, setAdding] = useState(false);
 
-    const [motors, setMotors] = useState(Array<Motor>());
+    // const [motors, setMotors] = useState(Array<Motor>());
     const [settings, setSettings] = useState(EMPTY_SETTINGS);
 
-    const [connected, setConnected] = useState(false);
-    const [connecting, setConnecting] = useState(false);
+    const dispatch = useDispatch();
 
-    const handleDisconnect = () => {
-        setConnected(false);
-    };
+    const motors = useSelector((state: RootState) => {
+        return state.motor.motors;
+    });
+
+    const {connectionState} = useSelector((state: RootState) => {
+        return state.app;
+    });
+    const connected = connectionState === ConnectionState.CONNECTED;
+    const connecting = connectionState === ConnectionState.CONNECTING;
+
+    const handleDisconnect = () => dispatch(disconnect());
 
     const handleGetMotors = (motorsArr: Array<any>) => {
-        const motors = motorsArr.map(m => new Motor(m.name, m.pin, new MotorState(m.angle)));
-        setMotors(motors);
+        const motors = motorsArr.map(m => createMotor({name: m.name, pin: m.pin, state: {angle: m.angle}}));
+        dispatch(motorsLoaded(motors));
     };
 
     useEffect(() => {
         let initialSettings = Settings.load();
         setSettings(initialSettings);
 
-        server.getMotorsHandler = handleGetMotors;
-        server.onDisconnect(handleDisconnect);
+        Server.getMotorsHandler = handleGetMotors;
+        Server.onDisconnect(handleDisconnect);
 
         if(initialSettings !== EMPTY_SETTINGS){
             handleConnect(initialSettings.address);
@@ -69,22 +80,15 @@ export default (props: any) => {
     };
 
     const handleAngleChange = (motor: Motor, angle: number) => {
-        const newMotors = [...motors];
-        let index = newMotors.findIndex((m: Motor) => m === motor);
-        newMotors[index] = motor.atAngle(angle);
-        setMotors(newMotors);
-
-        server.sendAngle(motor.name, angle);
+        dispatch(changeMotorAngle({angle, motor}))
     };
 
     const handleAddClick = () => setAdding(true);
     const handleAddMotor = (motor: Motor) => {
-        const newMotors = [...motors];
-        newMotors.push(motor);
-        setMotors(newMotors);
+        dispatch(addMotor(motor));
         setAdding(false);
 
-        server.addMotor(motor);
+        Server.addMotor(motor);
     }
     const handleAddCancel = () => setAdding(false);
 
@@ -93,16 +97,7 @@ export default (props: any) => {
         settings.persist();
         setSettings(settings);
 
-        setConnecting(true);
-
-        try {
-            await server.connect(address);
-            setConnecting(false);
-            setConnected(true);
-        } catch (e) {
-            setConnecting(false);
-            console.log(e);
-        }
+        dispatch(connectToServer(address));
     };
 
     return <ThemeProvider theme={theme}>
@@ -116,8 +111,8 @@ export default (props: any) => {
             />}
 
             {connected &&
-            <Container maxWidth="lg" >
-                <Paper className={classes.container}>
+                <Container maxWidth="lg">
+                <Paper className={classes.container} elevation={0}>
                     <Tabs value={tab} onChange={handleTabChange}>
                         <Tab label="Motors" />
                         <Tab label="Programs" />
@@ -128,8 +123,6 @@ export default (props: any) => {
                         onAngleChange={handleAngleChange}
                         onAddClick={handleAddClick}
                     />}
-
-
                 </Paper>
 
                 {adding && <AddMotorDialog
@@ -137,7 +130,7 @@ export default (props: any) => {
                     onSave={handleAddMotor}
                     onCancel={handleAddCancel}
                 />}
-            </Container>
+                </Container>
             }
         </div>
     </ThemeProvider>

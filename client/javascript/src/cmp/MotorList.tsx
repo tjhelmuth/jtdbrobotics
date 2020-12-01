@@ -37,7 +37,7 @@ export default ({motors, onAngleChange, onAddClick}: Props) => {
 
         {motors.length === 0 && <Typography color="textSecondary" style={{padding: 8}}>You have not added any motors</Typography>}
 
-        {motors.map((motor: Motor) => <Grid item xs={12} md={3}>
+        {motors.map((motor: Motor) => <Grid key={motor.name} item sm={6} xs={12} md={4} lg={4} xl={3}>
             <MotorCard motor={motor} onAngleChange={onAngleChange}/>
         </Grid>)}
     </Grid>

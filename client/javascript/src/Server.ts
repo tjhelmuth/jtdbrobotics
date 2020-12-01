@@ -8,7 +8,7 @@ const SOCKET_OPTIONS = {
 
 };
 
-export default class Server {
+class Server {
     socket?: SocketIOClient.Socket
     disconnectHandler?: () => void;
     getMotorsHandler?: (motors: Array<object>) => void;
@@ -72,3 +72,5 @@ export default class Server {
         });
     }
 }
+
+export default new Server();
