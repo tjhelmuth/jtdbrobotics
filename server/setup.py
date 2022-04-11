@@ -26,6 +26,3 @@ def setup_motors(pigpio):
 
         except yaml.YAMLError as exc:
             print(exc)
-
-
-print(setup_motors(None))
