@@ -3,15 +3,18 @@ from motor import Motor
 from motor import Config as MotorConfig
 import util
 import time
+import yaml
 
 import eventlet
 import socketio
+
+import setup
 
 pi = pigpio.pi()
 
 config = MotorConfig(200, 1, 2, 0, 90)
 
-motors = []
+motors = setup.setup_motors(pi)
 
 sio = socketio.Server(cors_allowed_origins='*')
 app = socketio.WSGIApp(sio)

@@ -1,0 +1,31 @@
+arm1_to_arm2: 
+  pin: 12
+  freq: 200
+  min_time: 500
+  max_time: 2500
+  min_angle: 0
+  max_angle: 270
+
+arm2_to_arm3:
+  pin: 
+  freq: 200
+  min_time: 500
+  max_time: 2500
+  min_angle: 0
+  max_angle: 270
+
+arm3_to_arm4:
+  pin: 
+  freq: 200
+  min_time: 500
+  max_time: 2500
+  min_angle: 0
+  max_angle: 270
+
+base_to_arm1:
+  pin: 
+  freq: 200
+  min_time: 500
+  max_time: 2500
+  min_angle: 0
+  max_angle: 270

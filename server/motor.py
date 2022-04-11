@@ -12,6 +12,7 @@ class Motor:
         self.pin = pin
         self.config = config
 
+        # todo: don't do this in constructor 
         self.__configure()
 
     def setAngle(self, angle):
@@ -20,6 +21,8 @@ class Motor:
 
     def getAngle(self):
         return self.__convertDutyCycleToAngle(self.dutyCycle)
+
+
 
     def __configure(self):
         """  Set the initial PWM values """
@@ -59,6 +62,9 @@ class Motor:
     def __convertDutyCycleToAngle(self, dutyCycle):
         dutyTime = self.__convertDutyToTime(dutyCycle)
         return util.remap_range(dutyTime,  self.config.minTime, self.config.maxTime, self.config.minAngle, self.config.maxAngle)
+
+    def __str__(self) -> str:
+        return self.toJson()
 
     def toJson(self):
         dict = {
